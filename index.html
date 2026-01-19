@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rejos cat meme gen</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-900 text-white min-h-screen flex items-center justify-center">
+  <div class="bg-zinc-800 rounded-2xl shadow-xl p-6 w-full max-w-md space-y-4">
+    <h1 class="text-2xl font-bold text-center">🐱 Cat Meme Generator</h1>
+
+    <canvas id="memeCanvas" width="512" height="512" class="rounded-xl bg-black mx-auto"></canvas>
+
+    <div class="flex gap-3">
+      <button id="generateBtn" class="flex-1 bg-indigo-500 hover:bg-indigo-600 transition rounded-xl py-2 font-semibold">
+        Generate
+      </button>
+      <button id="copyBtn" class="flex-1 bg-emerald-500 hover:bg-emerald-600 transition rounded-xl py-2 font-semibold">
+        Copy
+      </button>
+    </div>
+
+    <p class="text-sm text-center text-zinc-400">Made by ArtCombo</p>
+  </div>
+
+  <script>
+    const captions = [
+      "AyoEdo smells",
+      "beefy being beefy",
+      "fiyah cat",
+      "am bast",
+      "catboi or catman",
+      "i cant spell casmyxys",
+      "im tuff!",
+      "vibing aggressively"
+	  "meow"
+    ];
+
+    const canvas = document.getElementById("memeCanvas");
+    const ctx = canvas.getContext("2d");
+
+    async function generateMeme() {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.src = `https://cataas.com/cat?width=512&height=512&random=${Date.now()}`;
+
+      const caption = captions[Math.floor(Math.random() * captions.length)];
+
+      img.onload = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        ctx.font = "bold 36px Impact, Arial";
+        ctx.textAlign = "center";
+        ctx.fillStyle = "white";
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 4;
+
+        const x = canvas.width / 2;
+        const y = canvas.height - 30;
+
+        ctx.strokeText(caption.toUpperCase(), x, y);
+        ctx.fillText(caption.toUpperCase(), x, y);
+      };
+    }
+
+    async function copyMeme() {
+      canvas.toBlob(async (blob) => {
+        try {
+          await navigator.clipboard.write([
+            new ClipboardItem({ "image/png": blob })
+          ]);
+          alert("Copied! Paste directly into Discord.");
+        } catch (err) {
+          alert("Copy failed. Your browser may not support image clipboard.");
+        }
+      });
+    }
+
+    document.getElementById("generateBtn").addEventListener("click", generateMeme);
+    document.getElementById("copyBtn").addEventListener("click", copyMeme);
+
+    generateMeme();
+  </script>
+</body>
+</html>
