@@ -1,87 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rejo's Cat Meme Generator</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rejo's Cat Meme Generator</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+#caption{position:absolute;top:10px;left:50%;transform:translateX(-50%);color:white;text-shadow:2px 2px 6px black;font-size:1.5rem;text-align:center;pointer-events:none;max-width:90%;word-wrap:break-word}.gif-container{position:relative;display:inline-block}
+</style>
 </head>
 <body class="bg-zinc-900 text-white min-h-screen flex items-center justify-center">
-  <div class="bg-zinc-800 rounded-2xl shadow-xl p-6 w-full max-w-md space-y-4">
-    <h1 class="text-2xl font-bold text-center">🐱 Cat Meme Generator</h1>
-
-    <canvas id="memeCanvas" width="512" height="512" class="rounded-xl bg-black mx-auto"></canvas>
-
-    <div class="flex gap-3">
-      <button id="generateBtn" class="flex-1 bg-indigo-500 hover:bg-indigo-600 transition rounded-xl py-2 font-semibold">
-        Generate
-      </button>
-      <button id="copyBtn" class="flex-1 bg-emerald-500 hover:bg-emerald-600 transition rounded-xl py-2 font-semibold">
-        Copy
-      </button>
-    </div>
-
-    <p class="text-sm text-center text-zinc-400">Made by ArtCombo</p>
-  </div>
-
-  <script>
-    const captions = [
-      "AyoEdo smells",
-      "beefy being beefy",
-      "fiyah cat",
-      "am bast",
-      "catboi or catman",
-      "i cant spell casmyxys",
-      "im tuff!",
-      "vibing aggressively",
-      "meow"
-    ];
-
-    const canvas = document.getElementById("memeCanvas");
-    const ctx = canvas.getContext("2d");
-
-    function generateMeme() {
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.src = `https://cataas.com/cat?width=512&height=512&random=${Date.now()}`;
-
-      const caption = captions[Math.floor(Math.random() * captions.length)];
-
-      img.onload = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-        ctx.font = "bold 32px Impact, Arial";
-        ctx.textAlign = "center";
-        ctx.fillStyle = "white";
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 4;
-
-        const x = canvas.width / 2;
-        const y = canvas.height - 30;
-
-        ctx.strokeText(caption.toUpperCase(), x, y);
-        ctx.fillText(caption.toUpperCase(), x, y);
-      };
-    }
-
-    function copyMeme() {
-      canvas.toBlob(async (blob) => {
-        try {
-          await navigator.clipboard.write([
-            new ClipboardItem({ "image/png": blob })
-          ]);
-          alert("Copied! Paste directly into Discord.");
-        } catch (err) {
-          alert("Copy failed. Your browser may not support image clipboard.");
-        }
-      });
-    }
-
-    document.getElementById("generateBtn").addEventListener("click", generateMeme);
-    document.getElementById("copyBtn").addEventListener("click", copyMeme);
-
-    generateMeme();
-  </script>
+<div class="bg-zinc-800 rounded-2xl shadow-xl p-6 w-fit space-y-4">
+<h1 class="text-2xl font-bold text-center">🐱 Cat Meme Generator</h1>
+<div class="gif-container">
+<img id="gif" class="rounded-xl mx-auto max-w-full" alt="cat gif"/>
+<div id="caption"></div>
+</div>
+<div class="flex gap-3">
+<button id="generateBtn" class="flex-1 bg-indigo-500 hover:bg-indigo-600 transition rounded-xl py-2 font-semibold">Generate</button>
+<button id="copyBtn" class="flex-1 bg-emerald-500 hover:bg-emerald-600 transition rounded-xl py-2 font-semibold">Copy</button>
+</div>
+<p class="text-sm text-center text-zinc-400">Made by ArtCombo</p>
+</div>
+<script>
+const TENOR_API_KEY="LIVDSRZULELA",captions=["AyoEdo smells","beefy being beefy","fiyah cat","am bast","catboi or catman","i cant spell casmyxys","im tuff!","vibing aggressively","meow"],fonts=["Arial","Comic Sans MS","Courier New","Georgia","Impact","Verdana"];let currentGifLink="";async function generateGif(){try{const e=await fetch(`https://api.tenor.com/v1/search?q=cat&key=${TENOR_API_KEY}&limit=30&media_filter=minimal`),t=await e.json(),n=t.results[Math.floor(Math.random()*t.results.length)];document.getElementById("gif").src=n.media[0].gif.url,currentGifLink=n.itemurl;const o=captions[Math.floor(Math.random()*captions.length)],a=fonts[Math.floor(Math.random()*fonts.length)],c=document.getElementById("caption");c.textContent=o,c.style.fontFamily=a}catch(e){console.error("Tenor failed",e)}}async function copyGifLink(){if(!currentGifLink)return;await navigator.clipboard.writeText(currentGifLink)}document.getElementById("generateBtn").addEventListener("click",generateGif),document.getElementById("copyBtn").addEventListener("click",copyGifLink),generateGif();
+</script>
 </body>
 </html>
