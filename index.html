@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rejos cat meme gen</title>
+  <title>Rejo's Cat Meme Generator</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-zinc-900 text-white min-h-screen flex items-center justify-center">
@@ -33,14 +33,14 @@
       "catboi or catman",
       "i cant spell casmyxys",
       "im tuff!",
-      "vibing aggressively"
-	  "meow"
+      "vibing aggressively",
+      "meow"
     ];
 
     const canvas = document.getElementById("memeCanvas");
     const ctx = canvas.getContext("2d");
 
-    async function generateMeme() {
+    function generateMeme() {
       const img = new Image();
       img.crossOrigin = "anonymous";
       img.src = `https://cataas.com/cat?width=512&height=512&random=${Date.now()}`;
@@ -51,7 +51,7 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        ctx.font = "bold 36px Impact, Arial";
+        ctx.font = "bold 32px Impact, Arial";
         ctx.textAlign = "center";
         ctx.fillStyle = "white";
         ctx.strokeStyle = "black";
@@ -65,7 +65,7 @@
       };
     }
 
-    async function copyMeme() {
+    function copyMeme() {
       canvas.toBlob(async (blob) => {
         try {
           await navigator.clipboard.write([
